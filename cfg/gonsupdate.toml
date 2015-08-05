@@ -1,0 +1,9 @@
+[config]
+user = ""
+password = ""
+#oldIpFile = "/var/lib/gonsupdate/oldIpFile"
+oldIpFile = "oldIpFile"
+ipv4 = true
+
+[serverToGetIp]
+urlList = ["http://curlmyip.com/", "http://www.icanhazip.com/"]

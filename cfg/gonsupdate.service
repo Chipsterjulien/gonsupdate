@@ -1,0 +1,11 @@
+[Unit]
+Description=Sync ip with hopper every 10 minutes
+After=network.target
+Wants=hopper_update.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/hopper_update
+
+[Install]
+WantedBy=multi-user.target
