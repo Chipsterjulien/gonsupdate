@@ -35,6 +35,7 @@ func getCurrentIp() (bool, string) {
 
 		ip = strings.Trim(string(body), "\n")
 		if ip != "" {
+		    findIt = true
 			break
 		}
 	}
@@ -78,8 +79,8 @@ func updateIpIfNeeded(oldIp *string, currentIp *string) {
 			os.Exit(1)
 		}
 
-		//if strings.Contains(string(body), "nochg") || strings.Contains(string(body), "good") {
-		if strings.Contains(string(body), "good") {
+        //if strings.Contains(string(body), "good") {
+		if strings.Contains(string(body), "nochg") || strings.Contains(string(body), "good") {
 			if err := ioutil.WriteFile(viper.GetString("config.oldIpFile"), []byte(*currentIp), 0644); err != nil {
 				log.Critical("Unable to write into \"%s\":", viper.GetString("config.oldIpFile"), err)
 				os.Exit(1)

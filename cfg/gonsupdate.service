@@ -1,5 +1,5 @@
 [Unit]
-Description=Sync ip with nsupdate every 10 minutes
+Description=Sync ip with nsupdate.info every 10 minutes if necessary
 After=network.target
 Wants=gonsupdate.timer
 

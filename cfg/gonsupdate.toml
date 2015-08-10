@@ -4,5 +4,5 @@ password = ""
 oldIpFile = "/var/lib/gonsupdate/oldIpFile"
 ipv4 = true
 
-[serverToGetIp]
+[servertogetip]
 urlList = ["http://curlmyip.com/", "http://www.icanhazip.com/"]
