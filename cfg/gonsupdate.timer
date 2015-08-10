@@ -1,12 +1,12 @@
 [Unit]
-Description=Timer for hopper_update
+Description=Timer for gonsupdate
 
 [Timer]
 # start as soon as possible the firt time (after reboot for example)
 Persistent=false
 OnBootSec=0s
 OnCalendar=*:0/10
-Unit=hopper_update.service
+Unit=gonsupdate.service
 
 [Install]
 WantedBy=default.target
