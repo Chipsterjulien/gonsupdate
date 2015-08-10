@@ -12,7 +12,7 @@ import (
 
 func getCurrentIp() (bool, string) {
 	log := logging.MustGetLogger("log")
-	urlList := viper.GetStringSlice("serverToGetIp.urlList")
+	urlList := viper.GetStringSlice("servertogetip.urlList")
 
 	ip := ""
 	findIt := false
