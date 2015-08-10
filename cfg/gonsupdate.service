@@ -1,5 +1,5 @@
 [Unit]
-Description=Sync ip with hopper every 10 minutes
+Description=Sync ip with nsupdate every 10 minutes
 After=network.target
 Wants=gonsupdate.timer
 
