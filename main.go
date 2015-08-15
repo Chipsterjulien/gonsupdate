@@ -18,6 +18,7 @@ func getCurrentIp() (bool, string) {
 	findIt := false
 
 	for _, url := range urlList {
+		log.Debug("Finding ip with this url: %s", url)
 		client := http.Client{Timeout: 30 * time.Second}
 
 		resp, err := client.Get(url)
@@ -34,16 +35,22 @@ func getCurrentIp() (bool, string) {
 		}
 
 		ip = strings.Trim(string(body), "\n")
+		log.Debug("IP is \"%s\" and find on \"%s\"", ip, url)
 		if ip != "" {
-		    findIt = true
+			findIt = true
 			break
 		}
 	}
+
+	log.Debug("IP is finding: %v", findIt)
+	log.Debug("IP is: %s", ip)
 
 	return findIt, ip
 }
 
 func loadOldIp() string {
+	log := logging.MustGetLogger("log")
+	log.Debug("Try to get IP in \"%s\" file", viper.GetString("config.oldIpFile"))
 	file := viper.GetString("config.oldIpFile")
 
 	ip, err := ioutil.ReadFile(file)
@@ -51,13 +58,20 @@ func loadOldIp() string {
 		return ""
 	}
 
+	log.Debug("IP will be return is: %s", ip)
+
 	return string(ip)
 }
 
 //func update_hopper_if_needed(cfg *Config, ip_file *string, old_ip *string, current_ip *string) {
 func updateIpIfNeeded(oldIp *string, currentIp *string) {
 	log := logging.MustGetLogger("log")
+
+	log.Debug("Old IP is: \"%s\"\nCurrent IP is: \"%s\"", *oldIp, *currentIp)
+
 	if *oldIp != *currentIp {
+		log.Debug("IP are differents")
+
 		client := http.Client{Timeout: 30 * time.Second}
 		url := ""
 		if viper.GetBool("config.ipv4") {
@@ -79,8 +93,8 @@ func updateIpIfNeeded(oldIp *string, currentIp *string) {
 			os.Exit(1)
 		}
 
-        //if strings.Contains(string(body), "good") {
 		if strings.Contains(string(body), "nochg") || strings.Contains(string(body), "good") {
+			log.Debug("Writing good IP in \"%s\" file", viper.GetString("config.oldIpFile"))
 			if err := ioutil.WriteFile(viper.GetString("config.oldIpFile"), []byte(*currentIp), 0644); err != nil {
 				log.Critical("Unable to write into \"%s\":", viper.GetString("config.oldIpFile"), err)
 				os.Exit(1)
@@ -90,7 +104,7 @@ func updateIpIfNeeded(oldIp *string, currentIp *string) {
 			os.Exit(1)
 		}
 	} else {
-		log.Info("Nothing to do")
+		log.Debug("Nothing to do")
 	}
 }
 
@@ -98,12 +112,6 @@ func main() {
 	logFile := "/var/log/gonsupdate/errors.log"
 	confPath := "/etc/gonsupdate"
 	confFilename := "gonsupdate"
-
-	/*
-		logFile := "errors.log"
-		confPath := "cfg/"
-		confFilename := "gonsupdate"
-	*/
 
 	fd := initLogging(&logFile)
 	defer fd.Close()

@@ -1,3 +1,7 @@
+# logtype can take: debug, info, notice, warning, error, critical
+# warning is the default
+logtype = "warning"
+
 [config]
 user = ""
 password = ""
