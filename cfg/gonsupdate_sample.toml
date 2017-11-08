@@ -9,4 +9,18 @@ oldIpFile = "/var/lib/gonsupdate/oldIpFile"
 ipv4 = true
 
 [servertogetip]
-urlList = ["http://curlmyip.com/", "http://www.icanhazip.com/"]
+urlList = ["http://www.icanhazip.com/", "https://ifconfig.co/ip", "https://ident.me", "https://curlmyip.net/"]
+
+[email]
+# Your email
+from = ""
+# Smtp of your email
+smtp = ""
+# SSL port
+port = 587
+# Your email login
+login = ""
+# Your email password
+password = ""
+# Who are send emails
+sendTo = [""]
